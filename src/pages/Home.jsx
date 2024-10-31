@@ -6,16 +6,16 @@ import { useInView } from 'react-intersection-observer';
 const Home = () => {
   const [activeTab, setActiveTab] = useState('patient');
   const [scrollY, setScrollY] = useState(0);
-  
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { 
+      transition: {
         duration: 0.6,
-        staggerChildren: 0.1 
+        staggerChildren: 0.1
       }
     }
   };
@@ -25,11 +25,24 @@ const Home = () => {
   const [ref2, inView2] = useInView({ threshold: 0.2, triggerOnce: true });
   const [ref3, inView3] = useInView({ threshold: 0.2, triggerOnce: true });
 
-  // Parallax effect
   useEffect(() => {
+    // Parallax effect
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Ajouter le script du chatbot Easy Peasy
+    const script = document.createElement('script');
+    script.src = "https://bots.easy-peasy.ai/chat.min.js";
+    script.defer = true;
+    script.setAttribute("data-chat-url", "https://bots.easy-peasy.ai/bot/09c84014-c159-462f-8a51-68daafcc5bc0");
+    script.setAttribute("data-btn-position", "bottom-right");
+    script.setAttribute("data-widget-btn-color", "#08df8f");
+    document.body.appendChild(script);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.body.removeChild(script);
+    };
   }, []);
 
   const features = {
@@ -82,10 +95,10 @@ const Home = () => {
             y: scrollY * 0.5
           }}
         />
-        
+
         <div className="absolute inset-0 bg-gradient-to-b from-primary/20 to-primary/80 z-10" />
-        
-        <motion.div 
+
+        <motion.div
           className="relative z-20 text-center text-white px-4"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,9 +110,9 @@ const Home = () => {
           <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto">
             Une plateforme innovante qui connecte patients et professionnels de santé
           </p>
-          
+
           {/* Interactive Call-to-Action */}
-          <motion.div 
+          <motion.div
             className="flex flex-col md:flex-row gap-6 justify-center"
             variants={containerVariants}
             initial="hidden"
@@ -109,19 +122,19 @@ const Home = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link 
+              <Link
                 to="/register/patient"
                 className="bg-white text-primary px-8 py-4 rounded-full text-lg font-medium hover:bg-opacity-90 transition shadow-lg inline-block"
               >
                 Espace Patient
               </Link>
             </motion.div>
-            
+
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link 
+              <Link
                 to="/register/doctor"
                 className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-white hover:text-primary transition inline-block"
               >
@@ -132,22 +145,22 @@ const Home = () => {
         </motion.div>
 
         {/* Scroll Indicator */}
-        <motion.div 
+        <motion.div
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
           animate={{ y: [0, 10, 0] }}
-          transition={{ 
+          transition={{
             duration: 1.5,
             repeat: Infinity,
             repeatType: "reverse"
           }}
         >
-          <svg 
+          <svg
             className="w-6 h-6 text-white"
-            fill="none" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth="2" 
-            viewBox="0 0 24 24" 
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
             stroke="currentColor"
           >
             <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
@@ -157,7 +170,7 @@ const Home = () => {
 
       {/* Interactive Features Section */}
       <section className="py-20 bg-gray-50" ref={ref1}>
-        <motion.div 
+        <motion.div
           className="max-w-7xl mx-auto px-4"
           initial={{ opacity: 0 }}
           animate={inView1 ? { opacity: 1 } : {}}
@@ -167,8 +180,8 @@ const Home = () => {
             <div className="bg-white rounded-full p-1 shadow-lg">
               <button
                 className={`px-6 py-3 rounded-full text-lg transition-all duration-300 ${
-                  activeTab === 'patient' 
-                    ? 'bg-primary text-white' 
+                  activeTab === 'patient'
+                    ? 'bg-primary text-white'
                     : 'text-gray-600'
                 }`}
                 onClick={() => setActiveTab('patient')}
@@ -177,8 +190,8 @@ const Home = () => {
               </button>
               <button
                 className={`px-6 py-3 rounded-full text-lg transition-all duration-300 ${
-                  activeTab === 'doctor' 
-                    ? 'bg-primary text-white' 
+                  activeTab === 'doctor'
+                    ? 'bg-primary text-white'
                     : 'text-gray-600'
                 }`}
                 onClick={() => setActiveTab('doctor')}
@@ -188,7 +201,7 @@ const Home = () => {
             </div>
           </div>
 
-          <motion.div 
+          <motion.div
             className="grid md:grid-cols-3 gap-8"
             initial="hidden"
             animate="visible"
@@ -216,7 +229,7 @@ const Home = () => {
 
       {/* Interactive Statistics Section */}
       <section className="py-20 bg-primary" ref={ref2}>
-        <motion.div 
+        <motion.div
           className="max-w-7xl mx-auto px-4"
           initial={{ opacity: 0, y: 50 }}
           animate={inView2 ? { opacity: 1, y: 0 } : {}}
@@ -229,7 +242,7 @@ const Home = () => {
               { number: "50k+", label: "Rendez-vous" },
               { number: "4.9/5", label: "Satisfaction" }
             ].map((stat, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 className="text-center text-white"
                 whileHover={{ scale: 1.1 }}
@@ -247,7 +260,7 @@ const Home = () => {
 
       {/* Dynamic CTA Section */}
       <section className="py-20 bg-gradient-to-r from-primary to-primary-dark" ref={ref3}>
-        <motion.div 
+        <motion.div
           className="max-w-4xl mx-auto px-4 text-center"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={inView3 ? { opacity: 1, scale: 1 } : {}}
@@ -256,7 +269,7 @@ const Home = () => {
           <h2 className="text-4xl font-bold text-white mb-8">
             Prêt à nous rejoindre ?
           </h2>
-          <motion.div 
+          <motion.div
             className="flex flex-col sm:flex-row gap-6 justify-center"
             variants={containerVariants}
             initial="hidden"
@@ -266,7 +279,7 @@ const Home = () => {
               whileHover={{ scale: 1.05, rotateZ: 2 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link 
+              <Link
                 to="/register/patient"
                 className="bg-white text-primary px-8 py-4 rounded-full font-medium inline-block shadow-lg"
               >
@@ -277,7 +290,7 @@ const Home = () => {
               whileHover={{ scale: 1.05, rotateZ: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link 
+              <Link
                 to="/register/doctor"
                 className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-medium inline-block"
               >
