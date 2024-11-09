@@ -1,305 +1,281 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { FaUserMd, FaSearch, FaMapMarkerAlt } from 'react-icons/fa';
+import DoctorsImage from '../assets/images/Doctors.png';
+import PatientImage from '../assets/images/Hospital.png'; 
+import ProfessionalImage1 from '../assets/images/Professional1.png'; 
+import ProfessionalImage2 from '../assets/images/Professional2.png'; 
 
 const Home = () => {
-  const [activeTab, setActiveTab] = useState('patient');
-  const [scrollY, setScrollY] = useState(0);
-
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.1
-      }
+      transition: { duration: 0.6 }
     }
   };
 
-  // Intersection Observer hooks
-  const [ref1, inView1] = useInView({ threshold: 0.2, triggerOnce: true });
-  const [ref2, inView2] = useInView({ threshold: 0.2, triggerOnce: true });
-  const [ref3, inView3] = useInView({ threshold: 0.2, triggerOnce: true });
-
-  useEffect(() => {
-    // Parallax effect
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-
-    // Ajouter le script du chatbot Easy Peasy
-    const script = document.createElement('script');
-    script.src = "https://bots.easy-peasy.ai/chat.min.js";
-    script.defer = true;
-    script.setAttribute("data-chat-url", "https://bots.easy-peasy.ai/bot/09c84014-c159-462f-8a51-68daafcc5bc0");
-    script.setAttribute("data-btn-position", "bottom-right");
-    script.setAttribute("data-widget-btn-color", "#08df8f");
-    document.body.appendChild(script);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  const features = {
-    patient: [
-      {
-        icon: "🏥",
-        title: "Accès rapide aux soins",
-        description: "Trouvez un spécialiste et prenez rendez-vous en quelques clics"
-      },
-      {
-        icon: "📅",
-        title: "Gestion simplifiée",
-        description: "Gérez tous vos rendez-vous médicaux depuis une seule interface"
-      },
-      {
-        icon: "📋",
-        title: "Dossier médical",
-        description: "Accédez à votre historique médical en toute sécurité"
-      }
-    ],
-    doctor: [
-      {
-        icon: "👥",
-        title: "Gestion des patients",
-        description: "Optimisez votre agenda et développez votre patientèle"
-      },
-      {
-        icon: "💼",
-        title: "Espace professionnel",
-        description: "Un espace dédié pour gérer votre activité efficacement"
-      },
-      {
-        icon: "📊",
-        title: "Suivi d'activité",
-        description: "Analysez votre activité avec des statistiques détaillées"
-      }
-    ]
-  };
-
   return (
-    <div className="overflow-hidden">
-      {/* Hero Section with Parallax */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <motion.div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: "url('/path-to-your-bg-image.jpg')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            y: scrollY * 0.5
-          }}
-        />
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="bg-[#0A2725] p-4">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="text-white font-bold">Logo</div>
+          <div className="flex items-center gap-4">
+            <Link to="/login" className="text-white hover:text-[#24AE7C] flex items-center gap-2">
+              <span>Se connecter</span>
+            </Link>
+            <Link to="/appointments" className="text-white hover:text-[#24AE7C] flex items-center gap-2">
+              <span>Gérer mes RDV</span>
+            </Link>
+          </div>
+        </div>
+      </header>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/20 to-primary/80 z-10" />
-
-        <motion.div
-          className="relative z-20 text-center text-white px-4"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
+      {/* Hero Section */}
+      <section className="bg-[#0A2725] relative overflow-hidden min-h-[600px]">
+      <div className="max-w-7xl mx-auto px-8 pt-12 pb-16 relative z-10">
+        {/* Text Content */}
+        <div className="max-w-xl">
+          <h1 className="text-white text-4xl font-bold mb-3">
             La Santé de Demain
           </h1>
-          <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto">
+          <p className="text-white/80 text-lg mb-12">
             Une plateforme innovante qui connecte patients et professionnels de santé
           </p>
+          
+          {/* Search Bar */}
+          <div className="bg-white rounded-xl flex flex-col sm:flex-row shadow-lg">
+            <div className="flex-1 flex items-center px-4 py-4 border-b sm:border-b-0 sm:border-r border-gray-100">
+              <FaSearch className="text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Nom, spécialités, établissement..."
+                className="w-full ml-4 text-base outline-none text-gray-700 placeholder-gray-400"
+              />
+            </div>
+            
+            {/* Location Input */}
+            <div className="flex items-center px-4 py-4 border-b sm:border-b-0 sm:border-r border-gray-100">
+              <FaMapMarkerAlt className="text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Où ?"
+                className="ml-4 w-full sm:w-28 text-base outline-none text-gray-700 placeholder-gray-400"
+              />
+            </div>
+            
+            {/* Search Button */}
+            <button className="w-full sm:w-auto px-8 py-4 bg-[#00BA88] text-white font-medium hover:bg-[#00a578] transition-colors">
+              Rechercher
+            </button>
+          </div>
+        </div>
+      </div>
 
-          {/* Interactive Call-to-Action */}
-          <motion.div
-            className="flex flex-col md:flex-row gap-6 justify-center"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                to="/register/patient"
-                className="bg-white text-primary px-8 py-4 rounded-full text-lg font-medium hover:bg-opacity-90 transition shadow-lg inline-block"
-              >
-                Espace Patient
-              </Link>
-            </motion.div>
+      <div className="absolute right-0 bottom-0 hidden md:block">
+        <img
+          src={DoctorsImage}
+          alt="Medical professionals"
+          className="h-auto w-[600px] object-contain"
+          style={{ marginBottom: '-5px' }}
+        />
+      </div>
 
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                to="/register/doctor"
-                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-white hover:text-primary transition inline-block"
-              >
-                Espace Professionnel
-              </Link>
-            </motion.div>
-          </motion.div>
-        </motion.div>
+      <div className="absolute inset-0 md:hidden opacity-20">
+        <img
+          src={DoctorsImage}
+          alt="Background"
+          className="w-full h-full object-cover"
+        />
+      </div>
+    </section>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            repeatType: "reverse"
-          }}
-        >
-          <svg
-            className="w-6 h-6 text-white"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
-        </motion.div>
-      </section>
+      {/* Patient & Professional Sections */}
+      <section className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+  {/* Patient Section */}
+  <div className="flex flex-col md:flex-row items-center bg-[#F5F7FA] rounded-lg p-4 md:p-8">
+    <div className="w-full md:w-1/2 mb-6 md:mb-0">
+      <img
+        src={PatientImage}
+        alt="Patient avec professionnel de santé"
+        className="w-full max-w-md mx-auto"
+      />
+    </div>
+    <div className="w-full md:w-1/2 md:pl-16 text-center md:text-left">
+      <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">
+        Vous êtes patient
+      </h2>
+      <p className="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
+        Découvrez carepulse pour vos rdv et améliorez votre quotidien
+      </p>
+      <button className="bg-[#0A2725] text-white px-6 md:px-8 py-2.5 md:py-3 rounded-lg hover:bg-[#0d3330] w-full sm:w-auto transition-colors">
+        Espace patient
+      </button>
+    </div>
+  </div>
 
-      {/* Interactive Features Section */}
-      <section className="py-20 bg-gray-50" ref={ref1}>
-        <motion.div
-          className="max-w-7xl mx-auto px-4"
-          initial={{ opacity: 0 }}
-          animate={inView1 ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="flex justify-center mb-12">
-            <div className="bg-white rounded-full p-1 shadow-lg">
-              <button
-                className={`px-6 py-3 rounded-full text-lg transition-all duration-300 ${
-                  activeTab === 'patient'
-                    ? 'bg-primary text-white'
-                    : 'text-gray-600'
-                }`}
-                onClick={() => setActiveTab('patient')}
-              >
-                Patient
-              </button>
-              <button
-                className={`px-6 py-3 rounded-full text-lg transition-all duration-300 ${
-                  activeTab === 'doctor'
-                    ? 'bg-primary text-white'
-                    : 'text-gray-600'
-                }`}
-                onClick={() => setActiveTab('doctor')}
-              >
-                Professionnel
-              </button>
+  {/* Professional Section */}
+  <div className="bg-[#24AE7C] text-white rounded-xl p-6 md:p-8">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="w-full md:w-3/5">
+          <h2 className="text-2xl font-bold mb-2">
+            Vous êtes professionelle
+          </h2>
+          <p className="text-white/90 mb-4">
+            Une nouvelle manière d'exercer
+          </p>
+          <ul className="space-y-3 mb-6 list-none">
+            <li className="flex items-start gap-2">
+              <span className="text-sm mt-1.5">•</span>
+              <span>Dispensez les meilleurs soins possibles à vos patients</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-sm mt-1.5">•</span>
+              <span>Profitez d'une meilleure qualité de vie au travail</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-sm mt-1.5">•</span>
+              <span>Adoptez les solutions utilisées par 1 million de patients au sénégal</span>
+            </li>
+          </ul>
+          <button className="bg-[#0A2725] text-white px-8 py-3 rounded-lg hover:bg-opacity-90 transition-colors">
+            Espace professionelle
+          </button>
+        </div>
+
+        {/* Images Section */}
+        <div className="w-full md:w-2/5 relative h-[300px]">
+          <div className="absolute right-0 top-0 w-[200px] h-[200px]">
+            <div className="w-full h-full bg-white rounded-full overflow-hidden">
+              <img
+                src={ProfessionalImage1}
+                alt="Professionnel de santé 1"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
-
-          <motion.div
-            className="grid md:grid-cols-3 gap-8"
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-          >
-            {features[activeTab].map((feature, index) => (
-              <motion.div
-                key={index}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
-                whileHover={{ y: -10 }}
-                variants={containerVariants}
-              >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-primary mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* Interactive Statistics Section */}
-      <section className="py-20 bg-primary" ref={ref2}>
-        <motion.div
-          className="max-w-7xl mx-auto px-4"
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView2 ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { number: "10k+", label: "Patients" },
-              { number: "1000+", label: "Médecins" },
-              { number: "50k+", label: "Rendez-vous" },
-              { number: "4.9/5", label: "Satisfaction" }
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                className="text-center text-white"
-                whileHover={{ scale: 1.1 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView2 ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="text-4xl font-bold mb-2">{stat.number}</div>
-                <div className="text-white/80">{stat.label}</div>
-              </motion.div>
-            ))}
+          
+          <div className="absolute right-[80px] top-[100px] w-[200px] h-[200px]">
+            <div className="w-full h-full bg-white rounded-full overflow-hidden">
+              <img
+                src={ProfessionalImage2}
+                alt="Professionnel de santé 2"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
-        </motion.div>
-      </section>
+        </div>
+      </div>
+    </div>
+</section>
 
-      {/* Dynamic CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary to-primary-dark" ref={ref3}>
-        <motion.div
-          className="max-w-4xl mx-auto px-4 text-center"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={inView3 ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-4xl font-bold text-white mb-8">
-            Prêt à nous rejoindre ?
-          </h2>
-          <motion.div
-            className="flex flex-col sm:flex-row gap-6 justify-center"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
+
+      {/* Features Section */}
+      <section className="py-8 md:py-16 px-4 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">
+          Votre compagnon de santé au quotidien
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+          {[1, 2, 3].map((item) => (
             <motion.div
-              whileHover={{ scale: 1.05, rotateZ: 2 }}
-              whileTap={{ scale: 0.95 }}
+              key={item}
+              className="bg-white p-4 md:p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+              whileHover={{ y: -10 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
             >
-              <Link
-                to="/register/patient"
-                className="bg-white text-primary px-8 py-4 rounded-full font-medium inline-block shadow-lg"
-              >
-                Créer un compte patient
-              </Link>
+              <div className="text-[#24AE7C] mb-3 md:mb-4">
+                <FaUserMd className="w-6 h-6 md:w-8 md:h-8" />
+              </div>
+              <h3 className="text-lg md:text-xl font-bold mb-2">
+                Gestion des patients
+              </h3>
+              <p className="text-gray-600 text-sm md:text-base">
+                Optimisez votre agenda et développez votre patientèle
+              </p>
             </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* Statistics Section */}
+    <section className="py-8 md:py-16 px-4">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">
+          CarePulse en chiffres
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+          {[
+            { number: '10k+', label: 'Patients mieux soignées' },
+            { number: '1000+', label: 'Médecins utilisant carepulse' },
+            { number: '50k+', label: 'Prise de rendez-vous' },
+            { number: '4.9/5', label: 'Satisfaction' }
+          ].map((stat, index) => (
             <motion.div
-              whileHover={{ scale: 1.05, rotateZ: -2 }}
-              whileTap={{ scale: 0.95 }}
+              key={index}
+              className="text-center p-4 rounded-lg hover:bg-gray-50"
+              whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <Link
-                to="/register/doctor"
-                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-medium inline-block"
-              >
-                Créer un compte professionnel
-              </Link>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#24AE7C] mb-1 md:mb-2">
+                {stat.number}
+              </div>
+              <div className="text-gray-600 text-sm sm:text-base">
+                {stat.label}
+              </div>
             </motion.div>
-          </motion.div>
-        </motion.div>
-      </section>
+          ))}
+        </div>
+      </div>
+    </section>
+
+      {/* Help Section */}
+      <section className="py-8 md:py-12 px-4 text-center bg-gray-50">
+      <div className="max-w-xl mx-auto">
+        <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6">
+          Des questions ? Consultez notre Centre d'aide ou contactez-nous
+        </p>
+        <button className="bg-[#0A2725] text-white px-6 py-2.5 md:py-3 rounded-lg hover:bg-[#0d3330] transition-colors duration-300 text-sm md:text-base w-full sm:w-auto min-w-[200px]">
+          Centre d'aide
+        </button>
+      </div>
+    </section>
+
+    {/* Footer */}
+    <footer className="bg-[#E8F3F1] py-6 md:py-8 px-4">
+      <div className="max-w-7xl mx-auto">
+        <nav className="flex flex-wrap justify-center gap-x-4 gap-y-3 md:gap-8">
+          {[
+            { to: '/patients', label: 'Patients' },
+            { to: '/professionals', label: 'Professionnels' },
+            { to: '/specialists', label: 'Specialistes' },
+            { to: '/enterprise', label: 'Entreprise' },
+            { to: '/legal', label: 'Legal' },
+            { to: '/contact', label: 'Contact' }
+          ].map(({ to, label }) => (
+            <Link
+              key={to}
+              to={to}
+              className="text-gray-600 hover:text-[#24AE7C] transition-colors duration-200 text-sm md:text-base py-1 px-2"
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="text-center text-gray-500 text-xs md:text-sm mt-6 md:mt-8">
+          © {new Date().getFullYear()} CarePulse. Tous droits réservés.
+        </div>
+      </div>
+    </footer>
     </div>
   );
 };
