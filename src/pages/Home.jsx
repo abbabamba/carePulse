@@ -68,7 +68,7 @@ const Home = () => {
           </div>
           {/* Champ de localisation */}
           <div className="w-full sm:w-[30%] flex items-center border-b sm:border-b-0 sm:border-r border-gray-200">
-            <div className="flex items-center w-full px-4 py-4">
+            <div className="flex items-center w-full px-2 py-2">
               <FaMapMarkerAlt className="text-gray-400 w-5 h-5 flex-shrink-0" />
               <input
                 type="text"
