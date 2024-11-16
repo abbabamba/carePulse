@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        "primary":"#24AE7C",
-        "secondary":"#0D2A1F",
+        "primary": "#24AE7C",
+        "secondary": "#0D2A1F",
         dark: {
           200: "#0D0F10",
           300: "#131619",
@@ -18,10 +18,22 @@ export default {
           700: "#ABB8C4",
         },
       },
-      gridTemplateColumns:{
+      gridTemplateColumns: {
         "auto": "repeat(auto-fill, minmax(200px, 1fr))"
-      }
+      },
+      spacing: {
+        '0': '0',
+      },
+      margin: {
+        '0': '0',
+      },
+      padding: {
+        '0': '0',
+      },
     },
   },
   plugins: [],
+  corePlugins: {
+    container: false,
+  }
 }
