@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { UserCircle2, Calendar } from 'lucide-react';
 import { FaUserMd, FaSearch, FaMapMarkerAlt } from 'react-icons/fa';
 import DoctorsImage from '../assets/images/Doctors.png';
 import PatientImage from '../assets/images/Hospital.png'; 
 import ProfessionalImage1 from '../assets/images/Professional1.png'; 
 import ProfessionalImage2 from '../assets/images/Professional2.png'; 
+import Compagnon from "../components/HealthcareCompanion";
+import Header from '../components/Header';
 
 const Home = () => {
   const containerVariants = {
@@ -20,30 +23,10 @@ const Home = () => {
   return (
     <div className="bg-white">
       {/* Header */}
-      <header className="bg-[#0A2725] py-4 w-full">
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between items-center">
-        <div className="text-white font-bold">Logo</div>
-        <nav className="flex items-center gap-6">
-          <Link 
-            to="/login" 
-            className="text-white hover:text-[#22C993] transition-colors duration-200 flex items-center gap-2 text-base"
-          >
-            <span>Se connecter</span>
-          </Link>
-          <Link 
-            to="/appointments" 
-            className="text-white hover:text-[#22C993] transition-colors duration-200 flex items-center gap-2 text-base"
-          >
-            <span>Gérer mes RDV</span>
-          </Link>
-        </nav>
-      </div>
-    </div>
-  </header>
-      {/* Hero Section */}
+      <Header />
+      
       <section className="bg-[#0A2725] w-full relative overflow-hidden min-h-[600px]">
-    {/* Contenu principal */}
+
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 relative z-10">
       <div className="max-w-4xl">
         {/* Titre principal */}
@@ -53,40 +36,75 @@ const Home = () => {
         <p className="text-white/70 text-base mb-10">
           Une plateforme innovante qui connecte patients et professionnels de santé
         </p>
-        {/* Barre de recherche */}
-        <div className="bg-white rounded-[30px] overflow-hidden flex flex-col sm:flex-row shadow-lg">
-          {/* Champ de recherche */}
-          <div className="w-full sm:w-[45%] flex items-center border-b sm:border-b-0 sm:border-r border-gray-200">
-            <div className="flex items-center w-full px-2 py-2">
-              <FaSearch className="text-gray-400 w-5 h-5 flex-shrink-0" />
-              <input
-                type="text"
-                placeholder="Nom, spécialités, établissement..."
-                className="w-full ml-3 text-base outline-none text-gray-700 placeholder-gray-400"
-              />
-            </div>
-          </div>
-          {/* Champ de localisation */}
-          <div className="w-full sm:w-[30%] flex items-center border-b sm:border-b-0 sm:border-r border-gray-200">
-            <div className="flex items-center w-full px-2 py-2">
-              <FaMapMarkerAlt className="text-gray-400 w-5 h-5 flex-shrink-0" />
-              <input
-                type="text"
-                placeholder="Où ?"
-                className="w-full ml-3 text-base outline-none text-gray-700 placeholder-gray-400"
-              />
-            </div>
-          </div>
-          {/* Bouton de recherche */}
-          <div className="w-full sm:w-[25%] flex items-center p-4">
-            <button className="w-full py-4 bg-[#22C993] text-white font-medium hover:bg-opacity-90 transition-colors duration-200 rounded-[30px]">
-              Rechercher
-            </button>
-          </div>
-        </div>
+        
+<div className="sm:hidden">
+  <div className="bg-white rounded-3xl shadow-lg overflow-hidden max-w-[850px]">
+    <div className="flex flex-col">
+      {/* Champ de recherche */}
+      <div className="flex items-center px-6 py-4 border-b border-gray-200">
+        <FaSearch className="text-gray-400 w-5 h-5" />
+        <input
+          type="text"
+          placeholder="Nom, spécialités, établissement..."
+          className="w-full ml-4 text-base outline-none text-gray-700 placeholder-gray-400"
+        />
+      </div>
+      
+      {/* Champ de localisation */}
+      <div className="flex items-center px-6 py-4 border-b border-gray-200">
+        <FaMapMarkerAlt className="text-gray-400 w-5 h-5" />
+        <input
+          type="text"
+          placeholder="Où ?"
+          className="w-full ml-4 text-base outline-none text-gray-700 placeholder-gray-400"
+        />
       </div>
     </div>
-    {/* Illustration desktop */}
+    {/* Bouton de recherche */}
+    <div className="p-4">
+      <button className="w-full py-4 bg-emerald-400 hover:bg-emerald-500 text-emerald-950 font-medium transition-colors duration-200 rounded-2xl">
+        Rechercher
+      </button>
+    </div>
+  </div>
+</div>
+
+{/* Version desktop (masquée sur mobile, affichée par défaut sur sm et plus) */}
+<div className="hidden sm:block">
+  <div className="bg-white rounded-2xl overflow-hidden flex flex-col sm:flex-row shadow-lg w-[100%] max-w-[850px]">
+    {/* Champ de recherche */}
+    <div className="w-full sm:w-[35%] flex items-center border-b sm:border-b-0 sm:border-r border-gray-200">
+      <div className="flex items-center w-full px-2 py-2">
+        <FaSearch className="text-gray-400 w-10 h-5 flex-shrink-8" />
+        <input
+          type="text"
+          placeholder="Nom, spécialités, établissement..."
+          className="w-full ml-3 text-base outline-none text-gray-700 placeholder-gray-400 p-4"
+        />
+      </div>
+    </div>
+    {/* Champ de localisation */}
+    <div className="w-full sm:w-[30%] flex items-center border-b sm:border-b-0 sm:border-r border-gray-200">
+      <div className="flex items-center w-full px-2 py-2">
+        <FaMapMarkerAlt className="text-gray-400 w-5 h-5 flex-shrink-0" />
+        <input
+          type="text"
+          placeholder="Où ?"
+          className="w-full ml-3 text-base outline-none text-gray-700 placeholder-gray-400"
+        />
+      </div>
+    </div>
+    {/* Bouton de recherche */}
+    <div className="w-full sm:w-1/3 flex justify-end items-center px-2">
+      <button className="w-full sm:w-48 py-4 bg-emerald-400 text-emerald-950 font-medium hover:bg-opacity-90 transition-colors duration-200 rounded-full">
+        Rechercher
+      </button>
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+    {/* Illustration desktop uniquement */}
     <div className="absolute right-0 bottom-0 hidden lg:block">
       <img
         src={DoctorsImage}
@@ -94,15 +112,7 @@ const Home = () => {
         className="h-[550px] w-auto object-contain"
       />
     </div>
-    {/* Version mobile de l'illustration */}
-    <div className="absolute inset-0 lg:hidden opacity-10">
-      <img
-        src={DoctorsImage}
-        alt="Fond mobile"
-        className="w-full h-full object-cover"
-      />
-    </div>
-  </section>
+</section>
 
 
 
@@ -185,35 +195,7 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-8 md:py-16 mx-4 bg-[#FFFFFF] sm:mx-[5%]">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">
-            Votre compagnon de santé au quotidien
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4">
-            {[1, 2, 3].map((item) => (
-              <motion.div
-                key={item}
-                className="bg-white p-4 md:p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-                whileHover={{ y: -10 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="text-[#24AE7C] mb-3 md:mb-4">
-                  <FaUserMd className="w-6 h-6 md:w-8 md:h-8" />
-                </div>
-                <h3 className="text-lg md:text-xl font-bold mb-2">
-                  Gestion des patients
-                </h3>
-                <p className="text-gray-600 text-sm md:text-base">
-                  Optimisez votre agenda et développez votre patientèle
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Compagnon/>
 
       {/* Statistics Section */}
       <section className="py-8 md:py-16 w-full mx-4 sm:mx-[5%]">
